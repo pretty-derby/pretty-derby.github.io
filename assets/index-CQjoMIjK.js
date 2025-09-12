@@ -1,1 +1,0 @@
-import{j as r}from"./index-3yd_dm4Y.js";import{P as e}from"./PlayerList-B-CNbj7P.js";import{H as s}from"./Helmet-CxUaRvRG.js";const a=t=>r.jsxs(r.Fragment,{children:[r.jsx(s,{children:r.jsx("title",{children:"角色 - 乌拉拉大胜利 - 赛马娘资料站"})}),r.jsx(e,{className:"justify-between",sortFlag:!0,onClick:t.onClick}),";"]});export{a as default};
