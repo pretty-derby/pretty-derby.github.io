@@ -1,1 +1,0 @@
-import{am as e,j as a}from"./index-CoaSeAgj.js";import{i as r}from"./PlayerList-B9t_Tdky.js";import"./Helmet-Dn9Lbudp.js";const m=()=>{const{id:t}=e();return a.jsx("div",{className:"flex flex-auto w-full flex-wrap max-w-6xl mx-auto",children:a.jsx(r,{id:t,page:!0})})};export{m as default};
