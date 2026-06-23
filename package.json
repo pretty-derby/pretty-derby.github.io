@@ -5,10 +5,10 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build && cp dist/index.html dist/404.html",
+    "dev": "astro dev",
+    "build": "astro build",
     "lint": "eslint .",
-    "preview": "vite preview",
+    "preview": "astro preview",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
   },
@@ -57,6 +57,7 @@
     "zod": "^3.25.67"
   },
   "devDependencies": {
+    "@astrojs/react": "^6.0.0",
     "@eslint/js": "^9.25.0",
     "@types/lodash": "^4.17.19",
     "@types/lowdb": "^2.0.3",
@@ -67,6 +68,7 @@
     "@types/react-helmet": "^6.1.11",
     "@types/shortid": "^2.2.0",
     "@vitejs/plugin-react-swc": "^3.9.0",
+    "astro": "^7.0.0",
     "consola": "^3.4.2",
     "eslint": "^9.25.0",
     "eslint-plugin-react-hooks": "^5.2.0",

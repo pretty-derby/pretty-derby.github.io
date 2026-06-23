@@ -1,0 +1,21 @@
+---
+import SkillDetailPage from "../../../astro-pages/SkillDetailPage";
+import AppShell from "../../../layouts/AppShell.astro";
+import { readDB } from "../../../lib/db.server";
+
+export async function getStaticPaths() {
+  const db = await readDB();
+
+  return db.skills.map((skill) => ({
+    params: { id: skill.id },
+    props: { skill },
+  }));
+}
+
+const { id } = Astro.params;
+const { skill } = Astro.props;
+---
+
+<AppShell lang="en" title={`${skill.name} - Skill - Urarawin - Umamusume database`}>
+  <SkillDetailPage id={id} client:load />
+</AppShell>

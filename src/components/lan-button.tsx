@@ -7,10 +7,16 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import i18n from "@/i18n";
+import { getLocalizedPath } from "@/lib/locale";
 
 const LanButton = () => {
   const changeLanguage = (lan) => {
     i18n.changeLanguage(lan);
+
+    if (typeof window === "undefined") return;
+
+    const nextPath = getLocalizedPath(window.location.pathname, lan);
+    window.location.href = `${nextPath}${window.location.search}${window.location.hash}`;
   };
 
   return (

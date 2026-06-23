@@ -1,0 +1,21 @@
+---
+import PlayerDetailPage from "../../../astro-pages/PlayerDetailPage";
+import AppShell from "../../../layouts/AppShell.astro";
+import { readDB } from "../../../lib/db.server";
+
+export async function getStaticPaths() {
+  const db = await readDB();
+
+  return db.players.map((player) => ({
+    params: { id: player.id },
+    props: { player },
+  }));
+}
+
+const { id } = Astro.params;
+const { player } = Astro.props;
+---
+
+<AppShell lang="en" title={`${player.name} - Character - Urarawin - Umamusume database`}>
+  <PlayerDetailPage id={id} client:load />
+</AppShell>

@@ -1,0 +1,39 @@
+---
+import "@/styles/index.css";
+import "@/styles/old.css";
+
+const { title = "乌拉拉大胜利 - 赛马娘资料站", lang = "zh-CN" } = Astro.props;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="赛马娘 by八哲" />
+    <link rel="manifest" href="/manifest.json" />
+    <title>{title}</title>
+    <meta name="google-site-verification" content="YT9APkUOgxiot5X8_uKd7Y6WCPRiCsgcVNJpTa6mjFM" />
+    <script is:inline>
+      function onGaLoad() {
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+          window.dataLayer.push(arguments);
+        }
+        gtag("js", new Date());
+
+        gtag("config", "G-P8P8LQ98HY");
+      }
+    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P8P8LQ98HY" onload="onGaLoad()"></script>
+    <script data-ad-client="ca-pub-8175375243959470" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8175375243959470" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <noscript></noscript>
+    <slot />
+  </body>
+</html>

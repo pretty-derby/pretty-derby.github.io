@@ -4,17 +4,17 @@ import Layout from "@/components/common/Layout";
 import { useDB } from "./hooks/useDB";
 
 // 使用 lazy 动态导入组件
-const Race = lazy(() => import("@/pages/race"));
-const Player = lazy(() => import("@/pages/player"));
-const Support = lazy(() => import("@/pages/support"));
-const Nurturing = lazy(() => import("@/pages/nurturing"));
-const Skill = lazy(() => import("@/pages/skill"));
-const Seed = lazy(() => import("@/pages/seed"));
-const NurturingMO = lazy(() => import("@/pages/nurturingMo"));
-const SeedMo = lazy(() => import("@/pages/seedMo"));
-const SupportDetailPage = lazy(() => import("@/pages/support/detail"));
-const PlayerDetailPage = lazy(() => import("@/pages/player/detail"));
-const SkillDetailPage = lazy(() => import("@/pages/skill/detail"));
+const Race = lazy(() => import("@/react-pages/race"));
+const Player = lazy(() => import("@/react-pages/player"));
+const Support = lazy(() => import("@/react-pages/support"));
+const Nurturing = lazy(() => import("@/react-pages/nurturing"));
+const Skill = lazy(() => import("@/react-pages/skill"));
+const Seed = lazy(() => import("@/react-pages/seed"));
+const NurturingMO = lazy(() => import("@/react-pages/nurturingMo"));
+const SeedMo = lazy(() => import("@/react-pages/seedMo"));
+const SupportDetailPage = lazy(() => import("@/react-pages/support/detail"));
+const PlayerDetailPage = lazy(() => import("@/react-pages/player/detail"));
+const SkillDetailPage = lazy(() => import("@/react-pages/skill/detail"));
 const BuffList = lazy(() => import("@/components/buff"));
 
 const App = () => {

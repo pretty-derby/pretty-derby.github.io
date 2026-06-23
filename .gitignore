@@ -19,6 +19,7 @@ tool/node_modules
 # /build
 /build
 /dist
+/.astro
 /public/img/support_card
 
 # misc

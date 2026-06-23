@@ -1,5 +1,4 @@
 import React, { ReactElement, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import {
@@ -19,13 +18,14 @@ import { CDN_SERVER } from "@/config";
 import dbL from "@/dbL";
 import { PC_MENU_LIST, MOBILE_MENU_LIST } from "@/config";
 import { Toaster } from "sonner";
+import { getLocalizedPath, stripLocaleFromPathname } from "@/lib/locale";
 
 const Layout = ({ children }: { children: ReactElement }) => {
   const { t } = useTranslation();
   const [openNavbar, setOpenNavbar] = useState(false);
   const ua = useUa();
-  const location = useLocation();
-  const navigate = useNavigate();
+  const currentPath =
+    typeof window === "undefined" ? "" : stripLocaleFromPathname(window.location.pathname);
 
   const resetNur = () => {
     dbL.chain.set("selected", {
@@ -56,14 +56,13 @@ const Layout = ({ children }: { children: ReactElement }) => {
                   {list.map((item) => (
                     <Button
                       key={item.path}
-                      variant={location.pathname === item.path ? "default" : "ghost"}
-                      onClick={() => {
-                        setOpenNavbar(false);
-                        navigate(item.path);
-                      }}
+                      variant={currentPath === item.path ? "default" : "ghost"}
+                      asChild
                       className="justify-start"
                     >
-                      {t(item.title)}
+                      <a href={getLocalizedPath(item.path)} onClick={() => setOpenNavbar(false)}>
+                        {t(item.title)}
+                      </a>
                     </Button>
                   ))}
                 </nav>
@@ -75,13 +74,9 @@ const Layout = ({ children }: { children: ReactElement }) => {
                 {list.map((item) => (
                   <NavigationMenuItem key={item.path}>
                     <NavigationMenuLink
-                      href={item.path}
-                      active={location.pathname === item.path}
+                      href={getLocalizedPath(item.path)}
+                      active={currentPath === item.path}
                       className={navigationMenuTriggerStyle()}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        navigate(item.path);
-                      }}
                     >
                       {t(item.title)}
                     </NavigationMenuLink>

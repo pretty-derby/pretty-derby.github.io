@@ -1,0 +1,21 @@
+---
+import SupportDetailPage from "../../../astro-pages/SupportDetailPage";
+import AppShell from "../../../layouts/AppShell.astro";
+import { readDB } from "../../../lib/db.server";
+
+export async function getStaticPaths() {
+  const db = await readDB();
+
+  return db.supports.map((support) => ({
+    params: { id: support.id },
+    props: { support },
+  }));
+}
+
+const { id } = Astro.params;
+const { support } = Astro.props;
+---
+
+<AppShell lang="en" title={`${support.name} - Support card - Urarawin - Umamusume database`}>
+  <SupportDetailPage id={id} client:load />
+</AppShell>

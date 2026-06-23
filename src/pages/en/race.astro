@@ -1,0 +1,12 @@
+---
+import AppShell from "../../layouts/AppShell.astro";
+import RaceStatic from "../../components/race/RaceStatic.astro";
+import { readDB, readLocale } from "../../lib/db.server";
+
+const db = await readDB();
+const messages = await readLocale("en");
+---
+
+<AppShell lang="en" title="Races - Urarawin - Umamusume database">
+  <RaceStatic races={db.races} messages={messages} />
+</AppShell>

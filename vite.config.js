@@ -16,6 +16,7 @@ export default defineConfig({
   resolve: {
     alias: {
       "@/": resolve(__dirname, "src") + "/",
+      "zod/v4/core": resolve(__dirname, "node_modules/zod/v4/core/index.js"),
     },
   },
   base: "/",

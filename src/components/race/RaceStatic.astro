@@ -1,0 +1,286 @@
+---
+import { RACE_FILTER_LIST } from "@/config";
+
+const { races, messages = {} } = Astro.props;
+
+const labels = [
+  "name",
+  "date",
+  "class",
+  "grade",
+  "place",
+  "ground",
+  "distance",
+  "distanceType",
+  "direction",
+  "side",
+];
+
+const labelTextDict = {
+  name: "名称",
+  date: "时间",
+  class: "年级",
+  grade: "赛事等级",
+  place: "地点",
+  ground: "场地",
+  distance: "长度",
+  distanceType: "赛程",
+  direction: "方向",
+  side: "赛道",
+};
+
+const t = (key) => messages[key] || key || "";
+const filterValue = (value) => value ?? "";
+---
+
+<section class="race-page mx-auto w-full max-w-[1400px] px-3 py-4 sm:px-4 lg:px-6">
+  <div class="race-table-frame rounded-md border bg-background">
+    <table class="race-table w-full caption-bottom text-sm">
+      <thead class="[&_tr]:border-b">
+        <tr class="border-b transition-colors">
+          {
+            labels.map((label) => (
+              <th
+                class:list={[
+                  "race-table-head text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap",
+                  label === "name" && "race-sticky-cell race-sticky-head sticky left-0",
+                ]}
+                >
+                <div class="race-head-content flex items-center gap-1">
+                  <span>{t(labelTextDict[label])}</span>
+                  {
+                    RACE_FILTER_LIST[label] && (
+                      <details class="race-filter relative inline-block">
+                        <summary
+                          class="race-filter-trigger inline-flex h-6 w-6 cursor-pointer list-none items-center justify-center rounded-md p-1"
+                          aria-label={`${t(labelTextDict[label])} filter`}
+                        >
+                          <span aria-hidden="true">▾</span>
+                        </summary>
+                        <div class="race-filter-menu absolute right-0 z-50 mt-1 min-w-32 rounded-md border bg-popover p-1 text-popover-foreground shadow-md">
+                          {RACE_FILTER_LIST[label].map((filter) => (
+                            <label class="race-filter-option relative flex cursor-default select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none">
+                              <input
+                                class="race-filter-checkbox h-4 w-4"
+                                type="checkbox"
+                                data-race-filter
+                                data-filter-field={label}
+                                value={filterValue(filter.value)}
+                              />
+                              <span class="whitespace-nowrap">{t(filter.text)}</span>
+                            </label>
+                          ))}
+                        </div>
+                      </details>
+                    )
+                  }
+                </div>
+              </th>
+            ))
+          }
+        </tr>
+      </thead>
+      <tbody class="[&_tr:last-child]:border-0">
+        {
+          races.map((race) => (
+            <tr
+              class="race-row border-b transition-colors"
+              data-race-id={race.id}
+              data-class={filterValue(race.class)}
+              data-grade={filterValue(race.grade)}
+              data-place={filterValue(race.place)}
+              data-ground={filterValue(race.ground)}
+              data-distancetype={filterValue(race.distanceType)}
+              data-direction={filterValue(race.direction)}
+              data-side={filterValue(race.side)}
+            >
+              {labels.map((label) => (
+                <td
+                  class:list={[
+                    "race-table-cell p-2 align-middle whitespace-nowrap",
+                    label === "name" && "race-sticky-cell sticky left-0",
+                  ]}
+                >
+                  {t(race[label])}
+                </td>
+              ))}
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<style>
+  .race-page {
+    color: var(--foreground);
+  }
+
+  .race-table-frame {
+    overflow: auto;
+    max-height: calc(100vh - 9rem);
+  }
+
+  .race-table {
+    border-collapse: separate;
+    border-spacing: 0;
+    min-width: 880px;
+  }
+
+  .race-table thead {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: var(--background);
+    box-shadow: 0 1px 0 var(--border);
+  }
+
+  .race-table-head {
+    background: var(--background);
+  }
+
+  .race-table-cell,
+  .race-table-head {
+    border-right: 1px solid color-mix(in oklch, var(--border) 72%, transparent);
+  }
+
+  .race-table-cell:last-child,
+  .race-table-head:last-child {
+    border-right: 0;
+  }
+
+  .race-row:nth-child(even) .race-table-cell {
+    background: color-mix(in oklch, var(--muted) 34%, transparent);
+  }
+
+  .race-row:hover .race-table-cell {
+    background: var(--muted);
+  }
+
+  .race-sticky-cell {
+    z-index: 10;
+    background: var(--background);
+    box-shadow: 1px 0 0 var(--border);
+  }
+
+  .race-row:nth-child(even) .race-sticky-cell {
+    background: color-mix(in oklch, var(--muted) 34%, var(--background));
+  }
+
+  .race-row:hover .race-sticky-cell {
+    background: var(--muted);
+  }
+
+  .race-sticky-head {
+    z-index: 30;
+  }
+
+  .race-head-content {
+    min-height: 1.5rem;
+  }
+
+  .race-filter > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .race-filter[open] .race-filter-trigger,
+  .race-filter-trigger:hover,
+  .race-filter-trigger:focus-visible {
+    background: var(--accent);
+    color: var(--accent-foreground);
+  }
+
+  .race-filter-trigger {
+    outline: none;
+  }
+
+  .race-filter-trigger:focus-visible {
+    box-shadow: 0 0 0 3px color-mix(in oklch, var(--ring) 45%, transparent);
+  }
+
+  .race-filter[open] .race-filter-trigger span {
+    transform: rotate(180deg);
+  }
+
+  .race-filter-trigger span {
+    line-height: 1;
+    transition: transform 120ms ease;
+  }
+
+  .race-filter-menu {
+    max-height: min(18rem, calc(100vh - 8rem));
+    overflow: auto;
+  }
+
+  .race-filter-option:hover,
+  .race-filter-option:focus-within {
+    background: var(--accent);
+    color: var(--accent-foreground);
+  }
+
+  .race-filter-checkbox {
+    accent-color: var(--primary);
+  }
+
+  .race-filter-option:has(.race-filter-checkbox:checked) {
+    background: color-mix(in oklch, var(--accent) 70%, var(--primary) 8%);
+    font-weight: 500;
+  }
+
+  @media (max-width: 640px) {
+    .race-page {
+      padding-inline: 0.75rem;
+      padding-block: 0.75rem;
+    }
+
+    .race-table-frame {
+      max-height: calc(100vh - 7rem);
+    }
+
+    .race-table {
+      min-width: 760px;
+      font-size: 0.8125rem;
+    }
+
+    .race-table-cell,
+    .race-table-head {
+      padding-inline: 0.5rem;
+    }
+  }
+</style>
+
+<script>
+  const inputs = Array.from(document.querySelectorAll("[data-race-filter]"));
+  const rows = Array.from(document.querySelectorAll("[data-race-id]"));
+
+  const applyRaceFilters = () => {
+    const selected = new Map();
+
+    inputs.forEach((input) => {
+      if (!(input instanceof HTMLInputElement) || !input.checked) return;
+
+      const field = input.dataset.filterField;
+      if (!field) return;
+
+      const values = selected.get(field) || [];
+      values.push(input.value);
+      selected.set(field, values);
+    });
+
+    rows.forEach((row) => {
+      if (!(row instanceof HTMLElement)) return;
+
+      const visible = Array.from(selected.entries()).every(([field, values]) => {
+        if (!values.length) return true;
+        return values.includes(row.dataset[field.toLowerCase()] || "");
+      });
+
+      row.hidden = !visible;
+    });
+  };
+
+  inputs.forEach((input) => {
+    input.addEventListener("change", applyRaceFilters);
+  });
+</script>
